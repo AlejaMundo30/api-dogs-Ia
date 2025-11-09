@@ -6,126 +6,173 @@
     <title>Dog Breed AI - Todas las Razas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: #8B4513;
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px 0;
-        }
-        
-        .container-custom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        
-        .header-section {
-            background: #8B4513;
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-        }
-        
-        .title {
-            font-size: 3rem;
-            font-weight: bold;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-            margin-bottom: 1rem;
-        }
-        
-        .breeds-container {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        
-        .breed-card {
-            background: #FFF8DC;
-            border: 2px solid #FF7F50;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .breed-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 127, 80, 0.3);
-        }
-        
-        .breed-name {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #8B4513;
-            margin-bottom: 1rem;
-        }
-        
-        .btn-back {
-            background: linear-gradient(45deg, #B87333, #FF7F50);
-            border: none;
-            border-radius: 25px;
-            padding: 12px 30px;
-            color: white;
-            font-weight: bold;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-back:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            color: white;
-            text-decoration: none;
-        }
-        
-        .title-dog-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 15px;
-            vertical-align: middle;
-            border: 3px solid var(--primary-brown);
-            box-shadow: 0 4px 8px rgba(139, 69, 19, 0.2);
-        }
-    </style>
+    <link href="/css/dog-breeds.css" rel="stylesheet">
 </head>
 <body>
     <div class="container-custom">
         <div class="header-section">
             <h1 class="title">
                 <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=60&h=60&fit=crop&crop=face" 
-                     alt="Dog" class="title-dog-icon"> Todas las Razas Disponibles
+                     alt="Dog" class="title-dog-icon"> Catálogo de Razas
             </h1>
-            <p>Conoce las características de cada raza en nuestra base de datos</p>
+            <p class="subtitle">Explora las 195 razas en nuestra base de datos con inteligencia artificial</p>
         </div>
         
         <div class="breeds-container">
-            <div class="row">
+            <div class="search-section">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Buscar por nombre de raza...">
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="small">Pequeñas</button>
+                    <button class="filter-btn" data-filter="medium">Medianas</button>
+                    <button class="filter-btn" data-filter="large">Grandes</button>
+                </div>
+            </div>
+
+            <div class="breeds-stats">
+                <span class="stat-badge"><i class="fas fa-dog"></i> <span id="breedCount">{{ breeds|length }}</span> razas encontradas</span>
+            </div>
+            
+            <div class="row" id="breedsGrid">
                 {% for breed in breeds %}
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-4 breed-item" data-size="{{ 'small' if breed.size <= 2 else ('large' if breed.size >= 4 else 'medium') }}" data-name="{{ breed.breed|lower }}">
                     <div class="breed-card">
-                        <h4 class="breed-name">{{ breed.breed }}</h4>
+                        <div class="breed-header">
+                            {% set breed_id = loop.index %}
+                            <img src="https://placedog.net/150/150?id={{ breed_id }}" 
+                                 alt="{{ breed.breed }}" 
+                                 class="breed-image"
+                                 onerror="this.onerror=null; this.src='https://random.dog/woof.jpg?{{ breed_id }}'">
+                            <h4 class="breed-name">{{ breed.breed }}</h4>
+                        </div>
+                        
                         <div class="characteristics">
-                            <small><strong>Tamaño:</strong> {{ breed.size }}/5</small><br>
-                            <small><strong>Energía:</strong> {{ breed.energy_level }}/5</small><br>
-                            <small><strong>Entrenamiento:</strong> {{ breed.trainability }}/5</small><br>
-                            <small><strong>Con niños:</strong> {{ breed.good_with_kids }}/5</small>
+                            <div class="char-item">
+                                <span class="char-label"><i class="fas fa-ruler-vertical"></i> Tamaño:</span>
+                                <div class="char-bar">
+                                    <div class="char-fill" style="width: {{ (breed.size / 5 * 100)|int }}%"></div>
+                                    <span class="char-value">{{ breed.size }}/5</span>
+                                </div>
+                            </div>
+            
+                            <div class="char-item">
+                                <span class="char-label"><i class="fas fa-bolt"></i> Energía:</span>
+                                <div class="char-bar">
+                                    <div class="char-fill" style="width: {{ (breed.energy_level / 5 * 100)|int }}%"></div>
+                                    <span class="char-value">{{ breed.energy_level }}/5</span>
+                                </div>
+                            </div>
+                            
+                            <div class="char-item">
+                                <span class="char-label"><i class="fas fa-graduation-cap"></i> Entrenamiento:</span>
+                                <div class="char-bar">
+                                    <div class="char-fill" style="width: {{ (breed.trainability / 5 * 100)|int }}%"></div>
+                                    <span class="char-value">{{ breed.trainability }}/5</span>
+                                </div>
+                            </div>
+                            
+                            <div class="char-item">
+                                <span class="char-label"><i class="fas fa-child"></i> Con niños:</span>
+                                <div class="char-bar">
+                                    <div class="char-fill" style="width: {{ (breed.good_with_kids / 5 * 100)|int }}%"></div>
+                                    <span class="char-value">{{ breed.good_with_kids }}/5</span>
+                                </div>
+                            </div>
+
+                            <div class="char-item">
+                                <span class="char-label"><i class="fas fa-running"></i> Ejercicio:</span>
+                                <div class="char-bar">
+                                    <div class="char-fill" style="width: {{ (breed.exercise_needs / 5 * 100)|int }}%"></div>
+                                    <span class="char-value">{{ breed.exercise_needs }}/5</span>
+                                </div>
+                            </div>
+
+                            <div class="char-item">
+                                <span class="char-label"><i class="fas fa-cut"></i> Grooming:</span>
+                                <div class="char-bar">
+                                    <div class="char-fill" style="width: {{ (breed.grooming_needs / 5 * 100)|int }}%"></div>
+                                    <span class="char-value">{{ breed.grooming_needs }}/5</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="breed-tags">
+                            {% if breed.apartment_friendly >= 4 %}
+                            <span class="tag tag-apartment"><i class="fas fa-building"></i> Apto Apto.</span>
+                            {% endif %}
+                            {% if breed.good_alone >= 4 %}
+                            <span class="tag tag-alone"><i class="fas fa-clock"></i> Bueno Solo</span>
+                            {% endif %}
+                            {% if breed.watchdog_ability >= 4 %}
+                            <span class="tag tag-watchdog"><i class="fas fa-shield-alt"></i> Guardián</span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
             
-            <div class="text-center mt-4">
-                <a href="/form" class="btn-back">
-                    <i class="fas fa-arrow-left me-2"></i>Volver al Formulario
+            <div class="text-center mt-5">
+                <a href="/" class="btn-back">
+                    <i class="fas fa-home me-2"></i>Volver al Inicio
+                </a>
+                <a href="/form" class="btn-form">
+                    <i class="fas fa-search me-2"></i>Encontrar mi Raza
                 </a>
             </div>
         </div>
     </div>
+
+    <script>
+        // Búsqueda en tiempo real
+        const searchInput = document.getElementById('searchInput');
+        const breedItems = document.querySelectorAll('.breed-item');
+        const breedCount = document.getElementById('breedCount');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            let visibleCount = 0;
+
+            breedItems.forEach(item => {
+                const breedName = item.dataset.name;
+                if (breedName.includes(searchTerm)) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            breedCount.textContent = visibleCount;
+        });
+
+        // Filtros por tamaño
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                let visibleCount = 0;
+
+                breedItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.size === filter) {
+                        item.style.display = '';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                breedCount.textContent = visibleCount;
+                searchInput.value = '';
+            });
+        });
+    </script>
 </body>
 </html>

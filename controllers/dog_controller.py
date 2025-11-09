@@ -28,6 +28,10 @@ try:
     with open('models/breed_info.json', 'r', encoding='utf-8') as f:
         breed_info = json.load(f)
     
+    # Cargar imágenes de razas
+    with open('static/dog_images.json', 'r', encoding='utf-8') as f:
+        dog_images = json.load(f)
+    
     # Cargar dataset original
     df = pd.read_csv('data/dog_breeds_dataset.csv')
     
@@ -134,49 +138,78 @@ def generate_comparison_plot(user_preferences, recommended_breeds):
         print(f"Error generando gráfico: {e}")
         return None
 
-@router.get("/", response_class=HTMLResponse)
+@router.get("/", response_class=HTMLResponse, tags=["Web Interface"], 
+            summary="Página de Inicio",
+            description="Renderiza la página principal con información sobre el sistema de recomendación de razas")
 async def home_page(request: Request):
-    """Página de inicio del clasificador"""
+    """
+    ## Página de Inicio
+    
+    Muestra la landing page del sistema con:
+    - Descripción del servicio
+    - Características principales
+    - Galería de razas populares
+    - Call-to-action para comenzar
+    """
     return templates.TemplateResponse("dog_home.html", {"request": request})
 
-@router.get("/home", response_class=HTMLResponse)
+@router.get("/home", response_class=HTMLResponse, tags=["Web Interface"], include_in_schema=False)
 async def home_page_redirect(request: Request):
     """Redirección alternativa a la página de inicio"""
     return templates.TemplateResponse("dog_home.html", {"request": request})
 
-@router.get("/", response_class=HTMLResponse)
-async def dog_form(request: Request):
-    """Renderiza el formulario para encontrar la raza perfecta"""
-    return templates.TemplateResponse("dog_form.html", {
-        "request": request,
-        "features": breed_info['features'],
-        "descriptions": breed_info['feature_descriptions']
-    })
-
-@router.get("/form", response_class=HTMLResponse)
+@router.get("/form", response_class=HTMLResponse, tags=["Web Interface"],
+            summary="Formulario de Preferencias",
+            description="Formulario interactivo de 3 pasos para capturar las preferencias del usuario")
 async def dog_form_step(request: Request):
-    """Formulario paso a paso con nuevo diseño"""
+    """
+    ## Formulario Multi-Paso
+    
+    Formulario dividido en 3 secciones:
+    1. **Características del Perro**: Tamaño, energía, entrenamiento
+    2. **Estilo de Vida**: Ejercicio, apartamento, tiempo solo
+    3. **Comportamiento**: Ladridos, guardia, niños, grooming
+    
+    Cada característica se evalúa en escala de 1 a 5.
+    """
     return templates.TemplateResponse("dog_form_new.html", {
         "request": request,
         "features": breed_info['features'],
         "descriptions": breed_info['feature_descriptions']
     })
 
-@router.post("/recommend", response_class=HTMLResponse)
+@router.post("/recommend", response_class=HTMLResponse, tags=["API"],
+             summary="Obtener Recomendaciones",
+             description="Procesa las preferencias del usuario y retorna las 5 razas más compatibles con visualización")
 async def recommend_dogs(
     request: Request,
-    size: int = Form(...),
-    energy_level: int = Form(...),
-    trainability: int = Form(...),
-    good_with_kids: int = Form(...),
-    exercise_needs: int = Form(...),
-    barking_tendency: int = Form(...),
-    grooming_needs: int = Form(...),
-    apartment_friendly: int = Form(...),
-    good_alone: int = Form(...),
-    watchdog_ability: int = Form(...)
+    size: int = Form(..., ge=1, le=5, description="Tamaño del perro (1=muy pequeño, 5=muy grande)"),
+    energy_level: int = Form(..., ge=1, le=5, description="Nivel de energía requerido"),
+    trainability: int = Form(..., ge=1, le=5, description="Facilidad de entrenamiento esperada"),
+    good_with_kids: int = Form(..., ge=1, le=5, description="Compatibilidad con niños"),
+    exercise_needs: int = Form(..., ge=1, le=5, description="Necesidad de ejercicio"),
+    barking_tendency: int = Form(..., ge=1, le=5, description="Tolerancia a ladridos (1=poco, 5=mucho)"),
+    grooming_needs: int = Form(..., ge=1, le=5, description="Nivel de grooming aceptable"),
+    apartment_friendly: int = Form(..., ge=1, le=5, description="Necesidad de adaptación a apartamento"),
+    good_alone: int = Form(..., ge=1, le=5, description="Capacidad de estar solo"),
+    watchdog_ability: int = Form(..., ge=1, le=5, description="Necesidad de capacidad de guardián")
 ):
-    """Recibe las preferencias y devuelve recomendaciones de razas"""
+    """
+    ## Endpoint de Recomendación
+    
+    ### Proceso:
+    1. Normaliza las preferencias del usuario usando StandardScaler
+    2. Calcula similitud coseno entre perfil de usuario y 25 razas
+    3. Ordena por similitud descendente
+    4. Retorna top 5 razas con porcentaje de compatibilidad
+    5. Genera gráfico comparativo entre usuario y mejor raza
+    
+    ### Respuesta:
+    - HTML con tarjetas de razas recomendadas
+    - Porcentajes de compatibilidad
+    - Características detalladas de cada raza
+    - Gráfico comparativo visualizado
+    """
     
     # Recopilar preferencias del usuario
     user_preferences = [
@@ -198,12 +231,27 @@ async def recommend_dogs(
         "comparison_plot": comparison_plot
     })
 
-@router.get("/breeds", response_class=HTMLResponse)
+@router.get("/breeds", response_class=HTMLResponse, tags=["Web Interface"],
+            summary="Catálogo de Razas",
+            description="Muestra el catálogo completo de 25 razas con búsqueda y filtros")
 async def list_breeds(request: Request):
-    """Lista todas las razas disponibles"""
+    """
+    ## Catálogo Completo de Razas
+    
+    Página interactiva con:
+    - **Búsqueda en tiempo real** por nombre de raza
+    - **Filtros** por tamaño (pequeñas, medianas, grandes)
+    - **Tarjetas detalladas** con 6 características principales
+    - **Tags especiales** para razas aptas para apartamento, buenas solas y guardianas
+    - **Barras de progreso** visuales para cada característica
+    - **Imágenes reales** de cada raza
+    
+    Total de razas: 25
+    """
     breeds_data = df.to_dict('records')
     return templates.TemplateResponse("dog_breeds.html", {
         "request": request,
         "breeds": breeds_data,
-        "feature_descriptions": breed_info['feature_descriptions']
+        "feature_descriptions": breed_info['feature_descriptions'],
+        "dog_images": dog_images
     })

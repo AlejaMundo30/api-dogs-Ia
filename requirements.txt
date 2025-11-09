@@ -6,3 +6,6 @@ jinja2
 numpy
 python-multipart
 seaborn
+pandas
+joblib
+kagglehub
