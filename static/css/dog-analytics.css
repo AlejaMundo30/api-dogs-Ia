@@ -1,0 +1,257 @@
+/* Dog Analytics CSS - Estilo marrón consistente */
+:root {
+    --primary-brown: #8B4513;
+    --dark-brown: #654321;
+    --light-brown: #A0522D;
+    --accent-orange: #FF6B35;
+    --bg-light: #f8f5f2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-light);
+    color: #333;
+}
+
+/* Container */
+.container-custom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Header Section */
+.header-section {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, var(--primary-brown) 0%, var(--light-brown) 100%);
+    border-radius: 15px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.title-dog-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    opacity: 0.95;
+    font-weight: 300;
+}
+
+/* Statistics Cards */
+.stat-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border-top: 4px solid var(--primary-brown);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(139, 69, 19, 0.15);
+}
+
+.stat-card i {
+    color: var(--primary-brown);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-brown);
+    margin: 15px 0;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Chart Containers */
+.chart-container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+    box-shadow: 0 8px 30px rgba(139, 69, 19, 0.12);
+}
+
+.chart-header h2 {
+    color: var(--primary-brown);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.chart-header p {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.chart-body {
+    text-align: center;
+}
+
+.chart-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.chart-insight {
+    background: linear-gradient(135deg, #fff4e6 0%, #ffe8cc 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    border-left: 5px solid var(--accent-orange);
+}
+
+.chart-insight i {
+    color: var(--accent-orange);
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.chart-insight strong {
+    color: var(--dark-brown);
+}
+
+/* Conclusions Section */
+.conclusions-section {
+    background: var(--bg-light);
+}
+
+.conclusion-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.conclusion-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(139, 69, 19, 0.1);
+}
+
+.conclusion-item i {
+    color: var(--primary-brown);
+    font-size: 1.5rem;
+    margin-top: 5px;
+}
+
+.conclusion-item h5 {
+    color: var(--dark-brown);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.conclusion-item p {
+    color: #666;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Footer */
+.footer-section {
+    background: linear-gradient(135deg, var(--dark-brown) 0%, var(--primary-brown) 100%);
+    color: white;
+    margin-top: 40px;
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.footer-link:hover {
+    color: var(--accent-orange);
+    transform: translateY(-2px);
+}
+
+.footer-link i {
+    margin-right: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+    }
+    
+    .title-dog-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    
+    .chart-header h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container-custom {
+        padding: 20px 15px;
+    }
+    
+    .header-section {
+        padding: 30px 15px;
+    }
+    
+    .title {
+        font-size: 1.8rem;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .chart-container {
+        padding: 20px;
+    }
+}

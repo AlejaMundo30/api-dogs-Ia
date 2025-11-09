@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Breed AI - Analytics</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/dog-analytics.css">
+</head>
+<body>
+    <div class="container-custom">
+        <div class="header-section">
+            <h1 class="title">
+                <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=60&h=60&fit=crop&crop=face" 
+                     alt="Analytics" class="title-dog-icon"> Análisis del Dataset
+            </h1>
+            <p class="subtitle">Visualización y estadísticas de las 195 razas del American Kennel Club</p>
+        </div>
+
+    <!-- Estadísticas Generales -->
+    <section class="stats-section py-5">
+        <div class="container">
+                    <!-- Statistics Cards -->
+        <div class="row mb-5">
+            <div class="col-md-3 mb-3">
+                <div class="stat-card text-center">
+                    <i class="fas fa-database fa-3x mb-3"></i>
+                    <h3 class="stat-number">195</h3>
+                    <p class="stat-label">Razas</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-card text-center">
+                    <i class="fas fa-project-diagram fa-3x mb-3"></i>
+                    <h3 class="stat-number">10</h3>
+                    <p class="stat-label">Features</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-card text-center">
+                    <i class="fas fa-brain fa-3x mb-3"></i>
+                    <h3 class="stat-number">3</h3>
+                    <p class="stat-label">Modelos ML</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-card text-center">
+                    <i class="fas fa-chart-line fa-3x mb-3"></i>
+                    <h3 class="stat-number">7</h3>
+                    <p class="stat-label">Gráficos</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Gráficos -->
+    <section class="charts-section py-5 bg-light">
+        <div class="container">
+            
+            <!-- Distribución de Tamaños -->
+            <div class="chart-container mb-5">
+                <div class="chart-header">
+                    <h2><i class="fas fa-chart-pie"></i> Distribución de Tamaños</h2>
+                    <p>Clasificación de las 195 razas por tamaño</p>
+                </div>
+                <div class="chart-body">
+                    <img src="{{ charts.size_pie }}" alt="Distribución de tamaños" class="img-fluid">
+                </div>
+            </div>
+
+            <!-- Pair Plot - Matriz de Dispersión -->
+            <div class="chart-container mb-5">
+                <div class="chart-header">
+                    <h2><i class="fas fa-project-diagram"></i> Matriz de Relaciones entre Características</h2>
+                    <p>Gráfico de dispersión por pares - Similar al análisis de Iris</p>
+                </div>
+                <div class="chart-body">
+                    <img src="{{ charts.pair_plot }}" alt="Pair Plot" class="img-fluid">
+                </div>
+                <div class="chart-insight">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Insight:</strong> Este gráfico muestra todas las combinaciones posibles entre las características principales. 
+                    La diagonal muestra histogramas de cada feature. Los puntos están coloreados por tamaño de raza: 
+                    <span style="color: #FF6B35;">●</span> Pequeño, 
+                    <span style="color: #8B4513;">●</span> Mediano, 
+                    <span style="color: #654321;">●</span> Grande. 
+                    Puedes identificar correlaciones y clusters naturales de razas.
+                </div>
+            </div>
+
+            <!-- Distribuciones de Características -->
+            <div class="chart-container mb-5">
+                <div class="chart-header">
+                    <h2><i class="fas fa-chart-bar"></i> Distribución de Características</h2>
+                    <p>Histogramas mostrando la frecuencia de cada nivel (1-5) para todas las características</p>
+                </div>
+                <div class="chart-body">
+                    <img src="{{ charts.distributions }}" alt="Distribuciones" class="img-fluid">
+                </div>
+            </div>
+
+            <!-- Matriz de Correlación -->
+            <div class="chart-container mb-5">
+                <div class="chart-header">
+                    <h2><i class="fas fa-th"></i> Matriz de Correlación</h2>
+                    <p>Relación entre diferentes características (valores de -1 a 1)</p>
+                </div>
+                <div class="chart-body">
+                    <img src="{{ charts.correlation }}" alt="Correlación" class="img-fluid">
+                </div>
+                <div class="chart-insight">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Insight:</strong> Los valores positivos (rojos) indican correlación directa, 
+                    mientras que valores negativos (azules) indican relación inversa entre características.
+                </div>
+            </div>
+
+            <!-- Scatter Plot -->
+            <div class="chart-container mb-5">
+                <div class="chart-header">
+                    <h2><i class="fas fa-braille"></i> Energía vs Entrenabilidad</h2>
+                    <p>Relación entre nivel de energía y facilidad de entrenamiento</p>
+                </div>
+                <div class="chart-body">
+                    <img src="{{ charts.scatter }}" alt="Scatter plot" class="img-fluid">
+                </div>
+                <div class="chart-insight">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Insight:</strong> El tamaño de los puntos representa el tamaño de la raza, 
+                    y el color indica el nivel de juguetón.
+                </div>
+            </div>
+
+            <!-- Top Razas - Energía -->
+            <div class="chart-container mb-5">
+                <div class="chart-header">
+                    <h2><i class="fas fa-bolt"></i> Top 10 Razas Más Energéticas</h2>
+                    <p>Razas con mayor nivel de energía y actividad</p>
+                </div>
+                <div class="chart-body">
+                    <img src="{{ charts.top_energy }}" alt="Top energía" class="img-fluid">
+                </div>
+            </div>
+
+            <!-- Top Razas - Entrenabilidad -->
+            <div class="chart-container mb-5">
+                <div class="chart-header">
+                    <h2><i class="fas fa-graduation-cap"></i> Top 10 Razas Más Entrenables</h2>
+                    <p>Razas con mayor facilidad de entrenamiento</p>
+                </div>
+                <div class="chart-body">
+                    <img src="{{ charts.top_trainability }}" alt="Top entrenabilidad" class="img-fluid">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Conclusiones -->
+    <section class="conclusions-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="chart-container">
+                        <h2 class="mb-4">
+                            <i class="fas fa-microscope"></i> Conclusiones del Análisis
+                        </h2>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="conclusion-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <div>
+                                        <h5>Distribución Equilibrada</h5>
+                                        <p>La mayoría de las características muestran una distribución normal, 
+                                        con valores medios (3) siendo los más comunes.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="conclusion-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <div>
+                                        <h5>Correlaciones Interesantes</h5>
+                                        <p>El Pair Plot revela que razas energéticas tienden a requerir más ejercicio, 
+                                        y existe una correlación positiva entre entrenabilidad y comportamiento con niños.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="conclusion-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <div>
+                                        <h5>Variedad de Tamaños</h5>
+                                        <p>50% razas medianas, 33% grandes y 17% pequeñas, 
+                                        ofreciendo opciones para todos los espacios.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="conclusion-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <div>
+                                        <h5>Datos de Calidad</h5>
+                                        <p>Dataset oficial del AKC con 195 razas reconocidas, 
+                                        garantizando precisión en las recomendaciones.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 
 Sistema inteligente de recomendación de razas de perros usando Machine Learning.
 
-## 📋 Requisitos Previos
+## Requisitos Previos
 
 - **Python 3.9+** - [Descargar aquí](https://www.python.org/downloads/)
 - **pip** (incluido con Python)
@@ -93,13 +93,13 @@ app/
 - 14 características por raza
 - Datos normalizados (escala 1-5)
 
-## 🤖 Modelos de Machine Learning
+## Modelos de Machine Learning
 
 - **KNN** (K-Nearest Neighbors) - Recomendación por similitud
 - **Random Forest** - Clasificación de preferencias
 - **KMeans** - Agrupación de razas similares
 
-## 🛠️ Instalación Manual (opcional)
+##  Instalación Manual (opcional)
 
 Si prefieres instalar manualmente:
 

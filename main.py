@@ -1,8 +1,13 @@
 from pathlib import Path
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from fastapi.templating import Jinja2Templates
 from controllers.dog_controller import router as dog_router
+from controllers.analytics_controller import generate_all_charts, get_dataset_statistics
+
+# Templates
+templates = Jinja2Templates(directory="templates")
 
 # Crear la instancia de FastAPI con metadata para documentación
 app = FastAPI(
@@ -118,6 +123,19 @@ app.mount("/css", StaticFiles(directory=Path(__file__).resolve().parent / "stati
 
 # Registrar las rutas del controlador de perros
 app.include_router(dog_router, prefix="")
+
+# Ruta de analytics
+@app.get("/analytics", tags=["Web Interface"])
+async def analytics_page(request: Request):
+    """Página de análisis y visualización de datos del dataset"""
+    charts = generate_all_charts()
+    stats = get_dataset_statistics()
+    
+    return templates.TemplateResponse("dog_analytics.html", {
+        "request": request,
+        "charts": charts,
+        "stats": stats
+    })
 
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
