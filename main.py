@@ -15,11 +15,37 @@ app = FastAPI(
     ### 🎯 Características Principales
     
     * **Algoritmos ML**: KMeans, KNN y Random Forest
-    * **25 Razas**: Base de datos completa con características detalladas
+    * **195 Razas**: Base de datos completa del American Kennel Club
     * **10 Características**: Análisis multidimensional de compatibilidad
     * **Precisión 95%+**: Recomendaciones altamente personalizadas
     
-    ### 📊 Características Analizadas
+    ### 📊 Dataset Utilizado
+    
+    **Fuente de Datos**: [Dog Breeds Dataset - Kaggle](https://www.kaggle.com/datasets/sujaykapadnis/dog-breeds)
+    
+    - **Autor**: Sujay Kapadnis
+    - **Razas incluidas**: 195 razas oficiales del American Kennel Club (AKC)
+    - **Origen**: Datos recopilados del sitio oficial del AKC
+    - **Última actualización**: Version 2
+    - **Formato**: CSV con características normalizadas (escala 1-5)
+    
+    **Características del Dataset**:
+    - Affectionate With Family
+    - Good With Young Children
+    - Good With Other Dogs
+    - Shedding Level
+    - Coat Grooming Frequency
+    - Drooling Level
+    - Openness To Strangers
+    - Playfulness Level
+    - Watchdog/Protective Nature
+    - Adaptability Level
+    - Trainability Level
+    - Energy Level
+    - Barking Level
+    - Mental Stimulation Needs
+    
+    ### 📊 Características Analizadas por el Sistema
     
     1. **Tamaño** - Desde pequeño (1) hasta muy grande (5)
     2. **Apto para Apartamento** - Adaptabilidad a espacios reducidos
@@ -36,8 +62,8 @@ app = FastAPI(
     
     * **GET /** - Página de inicio con información del sistema
     * **GET /form** - Formulario interactivo para ingresar preferencias
-    * **POST /predict** - Endpoint de predicción que retorna razas recomendadas
-    * **GET /breeds** - Catálogo completo de las 25 razas disponibles
+    * **POST /recommend** - Endpoint de predicción que retorna razas recomendadas
+    * **GET /breeds** - Catálogo completo de las 195 razas disponibles
     
     ### 💡 Cómo Usar
     
@@ -52,10 +78,17 @@ app = FastAPI(
     * **ML**: Scikit-learn (KMeans, KNN, Random Forest, StandardScaler)
     * **Frontend**: Bootstrap 5, FontAwesome 6, JavaScript
     * **Templates**: Jinja2
+    * **Dataset**: Kaggle Dog Breeds Dataset (195 razas del AKC)
+    
+    ### 📚 Referencias
+    
+    - **Dataset Original**: [https://www.kaggle.com/datasets/sujaykapadnis/dog-breeds](https://www.kaggle.com/datasets/sujaykapadnis/dog-breeds)
+    - **American Kennel Club**: [https://www.akc.org](https://www.akc.org)
+    - **Documentación FastAPI**: [https://fastapi.tiangolo.com](https://fastapi.tiangolo.com)
     
     ---
     
-    **Desarrollado con ❤️ usando FastAPI y Machine Learning**
+    **Desarrollado con ❤️ usando FastAPI, Machine Learning y datos reales del AKC**
     """,
     version="2.0.0",
     terms_of_service="https://example.com/terms/",

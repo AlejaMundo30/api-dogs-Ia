@@ -71,15 +71,15 @@ adapted_df['exercise_needs'] = adapted_df['energy_level']
 adapted_df['good_alone'] = 5 - kaggle_df['Affectionate With Family']
 adapted_df['good_alone'] = adapted_df['good_alone'].clip(1, 5)
 
-# Reordenar columnas en el orden correcto
+    # Reordenar columnas en el orden correcto
 final_df = adapted_df[[
     'breed', 'size', 'energy_level', 'trainability', 'good_with_kids',
     'exercise_needs', 'barking_tendency', 'grooming_needs', 
     'apartment_friendly', 'good_alone', 'watchdog_ability'
 ]]
 
-# Guardar el dataset adaptado
-output_path = 'data/dog_breeds_dataset_kaggle.csv'
+# Guardar el dataset adaptado directamente como el dataset principal
+output_path = 'data/dog_breeds_dataset.csv'
 final_df.to_csv(output_path, index=False)
 
 print(f"✓ Dataset adaptado guardado en: {output_path}")
@@ -92,8 +92,7 @@ print(final_df.head(10))
 print("\n=== ESTADÍSTICAS ===")
 print(final_df.describe())
 
-print("\n✅ Dataset de Kaggle adaptado exitosamente!")
-print("Ahora tienes 2 opciones:")
-print("1. Usar el dataset original (25 razas): data/dog_breeds_dataset.csv")
-print("2. Usar el dataset de Kaggle (195 razas): data/dog_breeds_dataset_kaggle.csv")
-print("\nPara usar el dataset de Kaggle, renómbralo o actualiza train_dog_model.py")
+print("\nDataset de Kaggle adaptado y listo para usar!")
+print("El archivo data/dog_breeds_dataset.csv contiene las 195 razas del AKC")
+print("\nPara entrenar los modelos con este dataset, ejecuta:")
+print("python train_dog_model.py")

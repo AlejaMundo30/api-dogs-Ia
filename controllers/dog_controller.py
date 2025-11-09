@@ -142,15 +142,6 @@ def generate_comparison_plot(user_preferences, recommended_breeds):
             summary="Página de Inicio",
             description="Renderiza la página principal con información sobre el sistema de recomendación de razas")
 async def home_page(request: Request):
-    """
-    ## Página de Inicio
-    
-    Muestra la landing page del sistema con:
-    - Descripción del servicio
-    - Características principales
-    - Galería de razas populares
-    - Call-to-action para comenzar
-    """
     return templates.TemplateResponse("dog_home.html", {"request": request})
 
 @router.get("/home", response_class=HTMLResponse, tags=["Web Interface"], include_in_schema=False)
@@ -162,16 +153,6 @@ async def home_page_redirect(request: Request):
             summary="Formulario de Preferencias",
             description="Formulario interactivo de 3 pasos para capturar las preferencias del usuario")
 async def dog_form_step(request: Request):
-    """
-    ## Formulario Multi-Paso
-    
-    Formulario dividido en 3 secciones:
-    1. **Características del Perro**: Tamaño, energía, entrenamiento
-    2. **Estilo de Vida**: Ejercicio, apartamento, tiempo solo
-    3. **Comportamiento**: Ladridos, guardia, niños, grooming
-    
-    Cada característica se evalúa en escala de 1 a 5.
-    """
     return templates.TemplateResponse("dog_form_new.html", {
         "request": request,
         "features": breed_info['features'],
@@ -194,22 +175,6 @@ async def recommend_dogs(
     good_alone: int = Form(..., ge=1, le=5, description="Capacidad de estar solo"),
     watchdog_ability: int = Form(..., ge=1, le=5, description="Necesidad de capacidad de guardián")
 ):
-    """
-    ## Endpoint de Recomendación
-    
-    ### Proceso:
-    1. Normaliza las preferencias del usuario usando StandardScaler
-    2. Calcula similitud coseno entre perfil de usuario y 25 razas
-    3. Ordena por similitud descendente
-    4. Retorna top 5 razas con porcentaje de compatibilidad
-    5. Genera gráfico comparativo entre usuario y mejor raza
-    
-    ### Respuesta:
-    - HTML con tarjetas de razas recomendadas
-    - Porcentajes de compatibilidad
-    - Características detalladas de cada raza
-    - Gráfico comparativo visualizado
-    """
     
     # Recopilar preferencias del usuario
     user_preferences = [
@@ -235,19 +200,6 @@ async def recommend_dogs(
             summary="Catálogo de Razas",
             description="Muestra el catálogo completo de 25 razas con búsqueda y filtros")
 async def list_breeds(request: Request):
-    """
-    ## Catálogo Completo de Razas
-    
-    Página interactiva con:
-    - **Búsqueda en tiempo real** por nombre de raza
-    - **Filtros** por tamaño (pequeñas, medianas, grandes)
-    - **Tarjetas detalladas** con 6 características principales
-    - **Tags especiales** para razas aptas para apartamento, buenas solas y guardianas
-    - **Barras de progreso** visuales para cada característica
-    - **Imágenes reales** de cada raza
-    
-    Total de razas: 25
-    """
     breeds_data = df.to_dict('records')
     return templates.TemplateResponse("dog_breeds.html", {
         "request": request,

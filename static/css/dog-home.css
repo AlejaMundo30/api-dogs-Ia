@@ -193,6 +193,48 @@ body {
     background: #FF8A65;
 }
 
+.btn-secondary-custom {
+    background: var(--primary-brown);
+    border: none;
+    border-radius: 25px;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+}
+
+.btn-secondary-custom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(139, 69, 19, 0.5);
+    color: white;
+    background: #A0522D;
+}
+
+.btn-api-custom {
+    background: linear-gradient(45deg, #4A90E2, #357ABD);
+    border: none;
+    border-radius: 25px;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+.btn-api-custom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.5);
+    color: white;
+    background: linear-gradient(45deg, #357ABD, #2868A8);
+}
+
 .stats-section {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
