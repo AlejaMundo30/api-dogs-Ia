@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Breed AI - Clasificador Inteligente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-brown: #8B4513;
+            --secondary-brown: #A0522D;
+            --accent-orange: #FF6B35;
+            --light-cream: #F5E6D3;
+            --dark-brown: #654321;
+            --gradient-bg: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #FF6B35 100%);
+        }
+        
+        body {
+            background: #8B4513;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .hero-section {
+            background: transparent;
+            padding: 4rem 2rem;
+            margin: 2rem 0;
+            text-align: left;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .hero-content {
+            flex: 1;
+            max-width: 60%;
+        }
+        
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+        
+        .hero-subtitle {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: var(--accent-orange);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.1;
+        }
+        
+        .hero-dog {
+            flex-shrink: 0;
+            margin-left: 2rem;
+        }
+        
+        .hero-dog img {
+            max-width: 300px;
+            height: auto;
+        }
+        
+
+        
+        .breed-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .breed-tag {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .breed-tag:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .breed-tag .breed-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 12px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .hero-dog-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 2px solid var(--accent-orange);
+            vertical-align: middle;
+        }
+        
+        .main-dog-image {
+            width: 350px;
+            height: 350px;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .main-dog-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--accent-orange);
+            margin-bottom: 1rem;
+        }
+        
+        .btn-primary-custom {
+            background: var(--accent-orange);
+            border: none;
+            border-radius: 25px;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.5);
+            color: white;
+            background: #FF8A65;
+        }
+        
+        .stats-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-orange);
+        }
+        
+        .process-step {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 5px solid var(--accent-orange);
+        }
+        
+        .step-number {
+            background: var(--accent-orange);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Dog Breed AI</h1>
+                <h2 class="hero-subtitle">
+                    <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=50&h=50&fit=crop&crop=face" 
+                         alt="Dog" class="hero-dog-icon"> Clasificador<br>
+                    Inteligente
+                </h2>
+                <p class="lead mb-4" style="font-size: 1.15rem; line-height: 1.8; background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 15px; backdrop-filter: blur(10px);">
+                    🧠 <strong>Encuentra tu compañero perfecto</strong> con nuestra IA avanzada que analiza más de 10 características clave.
+                    <br><br>
+                    📊 Obtén recomendaciones personalizadas basadas en tu estilo de vida, hogar y preferencias.
+                    <br><br>
+                    🎯 <em style="color: #FFE4B5;">Compatibilidad del 95%+ garantizada</em> - Más de 25 razas analizadas con precisión científica.
+                </p>
+                
+                <!-- Breed Tags -->
+                <div class="breed-tags">
+                    <div class="breed-tag">
+                        <img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=40&h=40&fit=crop&crop=face" 
+                             alt="Labrador" class="breed-icon">Labrador
+                    </div>
+                    <div class="breed-tag">
+                        <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=40&h=40&fit=crop&crop=face" 
+                             alt="Golden Retriever" class="breed-icon">Golden Retriever
+                    </div>
+                    <div class="breed-tag">
+                        <img src="https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=40&h=40&fit=crop&crop=face" 
+                             alt="Pastor Alemán" class="breed-icon">Pastor Alemán
+                    </div>
+                    <div class="breed-tag">
+                        <img src="https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=40&h=40&fit=crop&crop=face" 
+                             alt="Chihuahua" class="breed-icon">Chihuahua
+                    </div>
+                    <div class="breed-tag">
+                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=40&h=40&fit=crop&crop=face" 
+                             alt="Bulldog Francés" class="breed-icon">Bulldog Francés
+                    </div>
+                </div>
+                
+                <a href="/form" class="btn btn-primary-custom btn-lg mt-4">
+                    <i class="fas fa-paw me-2"></i>
+                    Comenzar Clasificación
+                </a>
+            </div>
+            <div class="hero-dog">
+                <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop&crop=face" 
+                     alt="Beautiful Dog" class="main-dog-image">
+            </div>
+        </div>
+        
+        <!-- Features Section -->
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4 class="text-dark">Inteligencia Artificial</h4>
+                    <p class="text-muted">
+                        🤖 Algoritmos de IA entrenados con datos científicos de 25+ razas. 
+                        Análisis multi-dimensional para máxima precisión.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4 class="text-dark">Resultados Instantáneos</h4>
+                    <p class="text-muted">
+                        ⚡ Recomendaciones al instante con análisis en tiempo real. 
+                        Sin esperas, máxima eficiencia.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h4 class="text-dark">Personalizado</h4>
+                    <p class="text-muted">
+                        💝 Matching personalizado basado en 10+ factores clave: 
+                        hogar, tiempo, experiencia y lifestyle.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stats Section -->
+        <div class="stats-section text-center">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stat-number">25+</div>
+                    <p>Razas Analizadas</p>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-number">10</div>
+                    <p>Características</p>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-number">95%</div>
+                    <p>Precisión</p>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-number">3</div>
+                    <p>Pasos Simples</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Process Section -->
+        <div class="row mt-5">
+            <div class="col-md-8 mx-auto">
+                <h3 class="text-white text-center mb-4">¿Cómo Funciona?</h3>
+                
+                <div class="process-step d-flex align-items-center">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h5 class="mb-1">Información del Hogar</h5>
+                        <p class="mb-0 text-muted">Cuéntanos sobre tu espacio, familia y estilo de vida</p>
+                    </div>
+                </div>
+                
+                <div class="process-step d-flex align-items-center">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h5 class="mb-1">Tiempo y Dedicación</h5>
+                        <p class="mb-0 text-muted">Define cuánto tiempo puedes dedicar al cuidado y entrenamiento</p>
+                    </div>
+                </div>
+                
+                <div class="process-step d-flex align-items-center">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h5 class="mb-1">Preferencias Personales</h5>
+                        <p class="mb-0 text-muted">Especifica el tipo de perro que más te gusta</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CTA Section -->
+        <div class="text-center mt-5 mb-4">
+            <a href="/form" class="btn btn-primary-custom btn-lg">
+                <i class="fas fa-paw me-2"></i>
+                Encontrar Mi Raza Perfecta
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

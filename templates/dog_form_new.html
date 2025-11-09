@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐕 Dog Breed AI - Clasificador Inteligente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/dog-form.css" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header-section mb-5">
+            <h1 class="app-title">
+                <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=60&h=60&fit=crop&crop=face" 
+                     alt="Dog" class="app-dog-icon"> Dog Breed AI
+            </h1>
+            <h2 class="app-subtitle">Clasificador Inteligente</h2>
+        </div>
+        
+        <!-- Section Tabs -->
+        <div class="section-tabs">
+            <button class="tab-button active" onclick="showSection('hogar', this)">
+                <i class="fas fa-home me-2"></i>Hogar
+            </button>
+            <button class="tab-button" onclick="showSection('tiempo', this)">
+                <i class="fas fa-clock me-2"></i>Tiempo
+            </button>
+            <button class="tab-button" onclick="showSection('preferencias', this)">
+                <i class="fas fa-heart me-2"></i>Preferencias
+            </button>
+        </div>
+        
+        <!-- Form Container -->
+        <div class="form-container">
+            <form method="post" action="/recommend" id="dogForm">
+                
+                <!-- Sección Hogar -->
+                <div class="section-content active" id="hogar-section">
+                <div class="section-header">
+                    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=80&h=80&fit=crop" 
+                         alt="Hogar" class="section-icon">
+                    <h5 class="section-title">HOGAR</h5>
+                    <p class="section-description">Características de tu hogar</p>
+                </div>                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="question-card">
+                                <div class="question-title">
+                                    <i class="fas fa-expand-arrows-alt question-icon"></i>
+                                    ¿Qué tamaño de perro prefieres?
+                                </div>
+                                <div class="range-container">
+                                    <div class="slider-row">
+                                        <input type="range" class="form-range" name="size" 
+                                               min="1" max="5" value="3" oninput="updateValue('size', this.value)"
+                                               data-labels='["Toy (2-5kg)", "Pequeño (5-10kg)", "Mediano (10-25kg)", "Grande (25-45kg)", "Gigante (45kg+)"]'>
+                                        <div class="value-display" id="size_value">3</div>
+                                    </div>
+                                    <div class="range-scale" id="size_scale">
+                                        <span data-value="1">1</span>
+                                        <span data-value="2">2</span>
+                                        <span data-value="3" class="active">3</span>
+                                        <span data-value="4">4</span>
+                                        <span data-value="5">5</span>
+                                    </div>
+                                    <div class="range-labels">
+                                        <span>🐕 Toy/Pequeño</span>
+                                        <span>🐕‍🦺 Gigante</span>
+                                    </div>
+                                    <div class="current-label" id="size_label">Mediano (10-25kg)</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="question-card">
+                                <div class="question-title">
+                                    <i class="fas fa-building question-icon"></i>
+                                    ¿Vives en apartamento o casa?
+                                </div>
+                                <div class="range-container">
+                                    <div class="slider-row">
+                                        <input type="range" class="form-range" name="apartment_friendly" 
+                                               min="1" max="5" value="3" oninput="updateValue('apartment_friendly', this.value)">
+                                        <div class="value-display" id="apartment_friendly_value">3</div>
+                                    </div>
+                                    <div class="range-scale" id="apartment_friendly_scale">
+                                        <span data-value="1">1</span>
+                                        <span data-value="2">2</span>
+                                        <span data-value="3" class="active">3</span>
+                                        <span data-value="4">4</span>
+                                        <span data-value="5">5</span>
+                                    </div>
+                                    <div class="range-labels">
+                                        <span>Casa con jardín</span>
+                                        <span>Apartamento pequeño</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="question-card">
+                                <div class="question-title">
+                                    <i class="fas fa-child question-icon"></i>
+                                    ¿Hay niños en casa?
+                                </div>
+                                <div class="range-container">
+                                    <div class="slider-row">
+                                        <input type="range" class="form-range" name="good_with_kids" 
+                                               min="1" max="5" value="3" oninput="updateValue('good_with_kids', this.value)">
+                                        <div class="value-display" id="good_with_kids_value">3</div>
+                                    </div>
+                                    <div class="range-scale" id="good_with_kids_scale">
+                                        <span data-value="1">1</span>
+                                        <span data-value="2">2</span>
+                                        <span data-value="3" class="active">3</span>
+                                        <span data-value="4">4</span>
+                                        <span data-value="5">5</span>
+                                    </div>
+                                    <div class="range-labels">
+                                        <span>No hay niños</span>
+                                        <span>Muchos niños</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="question-card">
+                                <div class="question-title">
+                                    <i class="fas fa-shield-alt question-icon"></i>
+                                    ¿Quieres un perro guardián?
+                                </div>
+                                <div class="range-container">
+                                    <div class="slider-row">
+                                        <input type="range" class="form-range" name="watchdog_ability" 
+                                               min="1" max="5" value="3" oninput="updateValue('watchdog_ability', this.value)">
+                                        <div class="value-display" id="watchdog_ability_value">3</div>
+                                    </div>
+                                    <div class="range-scale" id="watchdog_ability_scale">
+                                        <span data-value="1">1</span>
+                                        <span data-value="2">2</span>
+                                        <span data-value="3" class="active">3</span>
+                                        <span data-value="4">4</span>
+                                        <span data-value="5">5</span>
+                                    </div>
+                                    <div class="range-labels">
+                                        <span>Solo compañía</span>
+                                        <span>Protección total</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección Tiempo -->
+                <div class="section-content" id="tiempo-section">
+                <div class="section-header">
+                    <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=80&h=80&fit=crop" 
+                         alt="Tiempo" class="section-icon">
+                    <h5 class="section-title">TIEMPO</h5>
+                    <p class="section-description">Tiempo disponible y actividad</p>
+                </div>                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="question-card">
+                                <div class="question-title">
+                                    <i class="fas fa-running question-icon"></i>
+                                    ¿Cuánto ejercicio puedes proporcionar?
+                                </div>
+                                <div class="range-container">
+                                    <div class="slider-row">
+                                        <input type="range" class="form-range" name="exercise_needs" 
+                                               min="1" max="5" value="3" oninput="updateValue('exercise_needs', this.value)">
+                                        <div class="value-display" id="exercise_needs_value">3</div>
+                                    </div>
+                                    <div class="range-scale" id="exercise_needs_scale">
+                                        <span data-value="1">1</span>
+                                        <span data-value="2">2</span>
+                                        <span data-value="3" class="active">3</span>
+                                        <span data-value="4">4</span>
+                                        <span data-value="5">5</span>
+                                    </div>
+                                    <div class="range-labels">
+                                        <span>Paseos cortos</span>
+                                        <span>Ejercicio intenso</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="question-card">
+                                <div class="question-title">
+                                    <i class="fas fa-graduation-cap question-icon"></i>
+                                    ¿Tienes experiencia entrenando perros?
+                                </div>
+                                <div class="range-container">
+                                    <div class="slider-row">
+                                        <input type="range" class="form-range" name="trainability" 
+                                               min="1" max="5" value="3" oninput="updateValue('trainability', this.value)">
+                                        <div class="value-display" id="trainability_value">3</div>
+                                    </div>
+                                    <div class="range-scale" id="trainability_scale">
+                                        <span data-value="1">1</span>
+                                        <span data-value="2">2</span>
+                                        <span data-value="3" class="active">3</span>
+                                        <span data-value="4">4</span>
+                                        <span data-value="5">5</span>
+                                    </div>
+                                    <div class="range-labels">
+                                        <span>Poco entrenamiento</span>
+                                        <span>Muy entrenable</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="question-card">
+                                <div class="question-title">
+                                    <i class="fas fa-cut question-icon"></i>
+                                    ¿Puedes dedicar tiempo al cuidado del pelo?
+                                </div>
+                                <div class="range-container">
+                                    <div class="slider-row">
+                                        <input type="range" class="form-range" name="grooming_needs" 
+                                               min="1" max="5" value="3" oninput="updateValue('grooming_needs', this.value)">
+                                        <div class="value-display" id="grooming_needs_value">3</div>
+                                    </div>
+                                    <div class="range-scale" id="grooming_needs_scale">
+                                        <span data-value="1">1</span>
+                                        <span data-value="2">2</span>
+                                        <span data-value="3" class="active">3</span>
+                                        <span data-value="4">4</span>
+                                        <span data-value="5">5</span>
+                                    </div>
+                                    <div class="range-labels">
+                                        <span>Bajo mantenimiento</span>
+                                        <span>Alto mantenimiento</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="question-card">
+                                <div class="question-title">
+                                    <i class="fas fa-clock question-icon"></i>
+                                    ¿Cuántas horas estará solo el perro?
+                                </div>
+                                <div class="range-container">
+                                    <div class="slider-row">
+                                        <input type="range" class="form-range" name="good_alone" 
+                                               min="1" max="5" value="3" oninput="updateValue('good_alone', this.value)">
+                                        <div class="value-display" id="good_alone_value">3</div>
+                                    </div>
+                                    <div class="range-scale" id="good_alone_scale">
+                                        <span data-value="1">1</span>
+                                        <span data-value="2">2</span>
+                                        <span data-value="3" class="active">3</span>
+                                        <span data-value="4">4</span>
+                                        <span data-value="5">5</span>
+                                    </div>
+                                    <div class="range-labels">
+                                        <span>Siempre acompañado</span>
+                                        <span>Muy independiente</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección Preferencias -->
+                <div class="section-content" id="preferencias-section">
+                    <div class="section-header">
+                        <img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=80&h=80&fit=crop&crop=face" 
+                             alt="Preferencias" class="section-icon">
+                        <h3 class="section-title">Preferencias Personales</h3>
+                        <p class="section-subtitle">Especifica el tipo de personalidad que prefieres</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="question-card">
+                                <div class="question-title">
+                                    <i class="fas fa-bolt question-icon"></i>
+                                    ¿Qué nivel de energía prefieres?
+                                </div>
+                                <div class="range-container">
+                                    <div class="slider-row">
+                                        <input type="range" class="form-range" name="energy_level" 
+                                               min="1" max="5" value="3" oninput="updateValue('energy_level', this.value)">
+                                        <div class="value-display" id="energy_level_value">3</div>
+                                    </div>
+                                    <div class="range-scale" id="energy_level_scale">
+                                        <span data-value="1">1</span>
+                                        <span data-value="2">2</span>
+                                        <span data-value="3" class="active">3</span>
+                                        <span data-value="4">4</span>
+                                        <span data-value="5">5</span>
+                                    </div>
+                                    <div class="range-labels">
+                                        <span>Muy tranquilo</span>
+                                        <span>Muy energético</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="question-card">
+                                <div class="question-title">
+                                    <i class="fas fa-volume-up question-icon"></i>
+                                    ¿Te molestan los ladridos?
+                                </div>
+                                <div class="range-container">
+                                    <div class="slider-row">
+                                        <input type="range" class="form-range" name="barking_tendency" 
+                                               min="1" max="5" value="3" oninput="updateValue('barking_tendency', this.value)">
+                                        <div class="value-display" id="barking_tendency_value">3</div>
+                                    </div>
+                                    <div class="range-scale" id="barking_tendency_scale">
+                                        <span data-value="1">1</span>
+                                        <span data-value="2">2</span>
+                                        <span data-value="3" class="active">3</span>
+                                        <span data-value="4">4</span>
+                                        <span data-value="5">5</span>
+                                    </div>
+                                    <div class="range-labels">
+                                        <span>Muy silencioso</span>
+                                        <span>Muy vocal</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <div class="navigation-buttons">
+                    <button type="button" class="btn-secondary-custom" id="prevBtn" onclick="previousSection()" style="display: none;">
+                        <i class="fas fa-arrow-left me-2"></i>Anterior
+                    </button>
+                    
+                    <div class="progress-indicator">
+                        <div class="progress-text" id="progressText">Sección 1 de 3</div>
+                    </div>
+                    
+                    <button type="button" class="btn-custom" id="nextBtn" onclick="nextSection()">
+                        Siguiente<i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                    
+                    <button type="submit" class="btn-custom" id="submitBtn" style="display: none;">
+                        <i class="fas fa-search me-2"></i>Encontrar mi Raza
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentSection = 0;
+        const sections = ['hogar', 'tiempo', 'preferencias'];
+        const sectionNames = ['Hogar', 'Tiempo', 'Preferencias'];
+        
+        function updateValue(field, value) {
+            const valueDisplay = document.getElementById(field + '_value');
+            valueDisplay.innerText = value;
+            
+            // Animación de pulso cuando cambia el valor
+            valueDisplay.style.animation = 'pulse 0.3s ease';
+            setTimeout(() => {
+                valueDisplay.style.animation = '';
+            }, 300);
+            
+            // Actualizar color del slider basado en el valor
+            const slider = document.querySelector(`input[name="${field}"]`);
+            const percentage = ((value - slider.min) / (slider.max - slider.min)) * 100;
+            slider.style.background = `linear-gradient(90deg, #FF6B35 0%, #FF6B35 ${percentage}%, #f5efe6 ${percentage}%, #ebe3d5 100%)`;
+            
+            // Actualizar escala numérica
+            const scale = document.getElementById(field + '_scale');
+            if (scale) {
+                scale.querySelectorAll('span').forEach(span => {
+                    span.classList.remove('active');
+                    if (span.dataset.value === value) {
+                        span.classList.add('active');
+                    }
+                });
+            }
+            
+            // Actualizar etiqueta descriptiva si existe
+            const labelElement = document.getElementById(field + '_label');
+            if (labelElement && slider.dataset.labels) {
+                const labels = JSON.parse(slider.dataset.labels);
+                const index = parseInt(value) - 1;
+                if (labels[index]) {
+                    labelElement.textContent = labels[index];
+                    labelElement.style.animation = 'pulse 0.3s ease';
+                    setTimeout(() => {
+                        labelElement.style.animation = '';
+                    }, 300);
+                }
+            }
+        }
+        
+        function showSection(sectionName, tabButton) {
+            // Remove active from all tabs
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            
+            // Add active to clicked tab
+            tabButton.classList.add('active');
+            
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').classList.add('active');
+            
+            // Update current section index
+            currentSection = sections.indexOf(sectionName);
+            updateNavigationButtons();
+        }
+        
+        function nextSection() {
+            if (currentSection < sections.length - 1) {
+                currentSection++;
+                const sectionName = sections[currentSection];
+                
+                // Update tab
+                document.querySelectorAll('.tab-button')[currentSection].click();
+                updateNavigationButtons();
+            }
+        }
+        
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                const sectionName = sections[currentSection];
+                
+                // Update tab
+                document.querySelectorAll('.tab-button')[currentSection].click();
+                updateNavigationButtons();
+            }
+        }
+        
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const progressText = document.getElementById('progressText');
+            
+            // Update progress text
+            progressText.textContent = `Sección ${currentSection + 1} de ${sections.length}`;
+            
+            // Show/hide previous button
+            prevBtn.style.display = currentSection === 0 ? 'none' : 'block';
+            
+            // Show/hide next and submit buttons
+            if (currentSection === sections.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            }
+        }
+        
+        // Initialize
+        updateNavigationButtons();
+        
+        // Inicializar todos los sliders cuando la página cargue
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('input[type="range"]').forEach(slider => {
+                updateValue(slider.name, slider.value);
+            });
+        });
+    </script>
+</body>
+</html>

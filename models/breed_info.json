@@ -1,0 +1,53 @@
+{
+  "breeds": [
+    "Golden Retriever",
+    "Bulldog Francés",
+    "Pastor Alemán",
+    "Labrador Retriever",
+    "Chihuahua",
+    "Poodle",
+    "Rottweiler",
+    "Beagle",
+    "Yorkshire Terrier",
+    "Boxer",
+    "Husky Siberiano",
+    "Border Collie",
+    "Dachshund",
+    "Shih Tzu",
+    "Boston Terrier",
+    "Pomeranian",
+    "Australian Shepherd",
+    "Siberian Husky",
+    "Cocker Spaniel",
+    "Maltese",
+    "Jack Russell Terrier",
+    "Pit Bull",
+    "Great Dane",
+    "Doberman",
+    "Schnauzer"
+  ],
+  "features": [
+    "size",
+    "energy_level",
+    "trainability",
+    "good_with_kids",
+    "exercise_needs",
+    "barking_tendency",
+    "grooming_needs",
+    "apartment_friendly",
+    "good_alone",
+    "watchdog_ability"
+  ],
+  "feature_descriptions": {
+    "size": "Tamaño (1=muy pequeño, 5=muy grande)",
+    "energy_level": "Nivel de energía (1=tranquilo, 5=muy activo)",
+    "trainability": "Facilidad de entrenamiento (1=difícil, 5=fácil)",
+    "good_with_kids": "Bueno con niños (1=no recomendado, 5=excelente)",
+    "exercise_needs": "Necesidades de ejercicio (1=poco, 5=mucho)",
+    "barking_tendency": "Tendencia a ladrar (1=silencioso, 5=ladra mucho)",
+    "grooming_needs": "Necesidades de cuidado (1=poco, 5=mucho)",
+    "apartment_friendly": "Apto para apartamento (1=no, 5=perfecto)",
+    "good_alone": "Tolera estar solo (1=no tolera, 5=muy independiente)",
+    "watchdog_ability": "Capacidad de guardia (1=no protector, 5=excelente guardián)"
+  }
+}
