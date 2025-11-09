@@ -1,4 +1,4 @@
-# 🐕 Dog Breed AI - Sistema de Recomendación de Razas
+# Dog Breed AI - Sistema de Recomendación de Razas
 
 Sistema inteligente de recomendación de razas de perros usando Machine Learning.
 
@@ -29,7 +29,7 @@ El script automáticamente:
 - ✅ Descarga el dataset de Kaggle (195 razas)
 - ✅ Entrena los modelos de Machine Learning
 
-## 🎮 Uso
+## Uso
 
 ### Iniciar el servidor
 
@@ -49,7 +49,7 @@ El script automáticamente:
 ./server.sh restart
 ```
 
-## 🌐 Acceder a la aplicación
+## Acceder a la aplicación
 
 Una vez iniciado el servidor, abre tu navegador:
 
@@ -58,7 +58,7 @@ Una vez iniciado el servidor, abre tu navegador:
 - **API Docs (Swagger)**: http://localhost:8000/docs
 - **API Docs (ReDoc)**: http://localhost:8000/redoc
 
-## 📦 Dependencias Principales
+## Dependencias Principales
 
 ```
 fastapi         # Framework web
@@ -69,7 +69,7 @@ jinja2          # Templates HTML
 kagglehub       # Dataset de Kaggle
 ```
 
-## 🗂️ Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 app/
@@ -85,7 +85,7 @@ app/
 └── static/                    # CSS, JS, imágenes
 ```
 
-## 📊 Dataset
+## Dataset
 
 **Fuente**: [Kaggle - Dog Breeds Dataset](https://www.kaggle.com/datasets/sujaykapadnis/dog-breeds)
 
@@ -143,10 +143,6 @@ chmod +x server.sh
 ### Error al descargar dataset de Kaggle
 Verifica tu conexión a internet. El dataset se descarga automáticamente.
 
-## 📝 Licencia
+## Licencia
 
 Dataset bajo licencia de Kaggle - Fuente: American Kennel Club
-
----
-
-**¿Necesitas ayuda?** Abre un issue en el repositorio.
